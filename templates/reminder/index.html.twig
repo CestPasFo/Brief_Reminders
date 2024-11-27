@@ -1,41 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reminder index{% endblock %}
+{% block title %}Reminder Index{% endblock %}
 
 {% block body %}
-    <h1>Reminder index</h1>
+    <h1 class="text-2xl font-bold mb-6">Reminder Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>CreatedDate</th>
-                <th>LimitDate</th>
-                <th>IsDone</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reminder in reminders %}
-            <tr>
-                <td>{{ reminder.id }}</td>
-                <td>{{ reminder.title }}</td>
-                <td>{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reminder.isDone ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}">show</a>
-                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="bg-white shadow-lg rounded-lg p-8 mb-6">
+        <table class="min-w-full">
+            <thead>
+                <tr class="bg-gray-300">
+                    <th class="py-3 px-4 text-left text-gray-700">Id</th>
+                    <th class="py-3 px-4 text-left text-gray-700">Title</th>
+                    <th class="py-3 px-4 text-left text-gray-700">Created Date</th>
+                    <th class="py-3 px-4 text-left text-gray-700">Limit Date</th>
+                    <th class="py-3 px-4 text-left text-gray-700">Is Done</th>
+                    <th class="py-3 px-4 text-left text-gray-700">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reminder in reminders %}
+                <tr class="border-b hover:bg-gray-100">
+                    <td class="py-3 px-4">{{ reminder.id }}</td>
+                    <td class="py-3 px-4">{{ reminder.title }}</td>
+                    <td class="py-3 px-4">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="py-3 px-4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="py-3 px-4">{{ reminder.isDone ? 'Yes' : 'No' }}</td>
+                    <td class="py-3 px-4">
+                        <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="text-blue-600 hover:underline">Show</a>
+                        <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="text-yellow-600 hover:underline ml-2">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-4">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_reminder_new') }}">Create new</a>
+    <div class="flex justify-between mt-6">
+        <a href="{{ path('app_reminder_new') }}" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition duration-200">Create New Reminder</a>
+
+        <a href="{{ path('app_category_index') }}" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">Go to Categories Index</a>
+    </div>
+
 {% endblock %}
