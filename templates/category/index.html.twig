@@ -25,7 +25,10 @@
         {% endfor %}
     </div>
 
-    <div class="mt-6">
+    <div class="flex justify-between mt-6">
         <a href="{{ path('app_category_new') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Create New</a>
+
+        <!-- Nouveau bouton pour l'index des rappels -->
+        <a href="{{ path('app_reminder_index') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">Go to Reminders Index</a>
     </div>
 {% endblock %}
