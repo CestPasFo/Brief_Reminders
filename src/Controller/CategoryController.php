@@ -3,57 +3,78 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
-class CategoryController extends AbstractController
-{
-    #[Route('/api/categories', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
+#[Route('/category')]
+final class CategoryController extends AbstractController{
+    #[Route(name: 'app_category_index', methods: ['GET'])]
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = $serializer->deserialize($request->getContent(), Category::class, 'json');
-        $entityManager->persist($category);
-        $entityManager->flush();
-        
-        return $this->json($category, Response::HTTP_CREATED);
+        return $this->render('category/index.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
     }
 
-    #[Route('/api/categories', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
+    #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $categories = $entityManager->getRepository(Category::class)->findAll();
-        $json = $serializer->serialize($categories, 'json');
-        
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('category/new.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
     }
 
-    #[Route('/api/categories/{id}', methods: ['GET'])]
-    public function show(Category $category, SerializerInterface $serializer): JsonResponse
+    #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
+    public function show(Category $category): Response
     {
-        $json = $serializer->serialize($category, 'json');
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        return $this->render('category/show.html.twig', [
+            'category' => $category,
+        ]);
     }
 
-    #[Route('/api/categories/{id}', methods: ['PUT'])]
-    public function update(Request $request, Category $category, EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
+    #[Route('/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        $serializer->deserialize($request->getContent(), Category::class, 'json', ['object_to_populate' => $category]);
-        $entityManager->flush();
-        
-        return $this->json($category);
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
     }
 
-    #[Route('/api/categories/{id}', methods: ['DELETE'])]
-    public function delete(Category $category, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
+    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        $entityManager->remove($category);
-        $entityManager->flush();
-        
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($category);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
     }
 }
