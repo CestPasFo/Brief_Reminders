@@ -56,4 +56,25 @@ class ReminderController extends AbstractController
         
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
+
+    #[Route('/api/todayReminders/', methods: ['GET'])]
+    public function getTodayReminders(EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
+{
+    $today = new \DateTime();
+    $today->setTime(0, 0, 0); // Réinitialise l'heure à 00:00:00
+
+    $qb = $entityManager->createQueryBuilder();
+    $qb->select('r')
+       ->from(Reminder::class, 'r')
+       ->where('r.limitDate >= :start')
+       ->andWhere('r.limitDate < :end')
+       ->setParameter('start', $today->format('Y-m-d 00:00:00'))
+       ->setParameter('end', $today->format('Y-m-d 23:59:59'));
+
+    $reminders = $qb->getQuery()->getResult();
+
+    $json = $serializer->serialize($reminders, 'json', ['groups' => 'reminder']);
+
+    return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
+}
 }
