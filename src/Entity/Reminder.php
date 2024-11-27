@@ -27,7 +27,7 @@ class Reminder
     private ?bool $isDone = null;
 
     #[ORM\ManyToOne(inversedBy: 'idReminder')]
-    private ?Category $idCategory = null;
+    private ?Category $idCategory;
 
     public function getId(): ?int
     {
