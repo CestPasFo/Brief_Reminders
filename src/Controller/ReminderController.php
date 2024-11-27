@@ -67,25 +67,22 @@ final class ReminderController extends AbstractController{
         ]);
     }
 
-    #[Route('/{id}', name: 'app_reminder_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_reminder_delete', methods: ['POST'])]
     public function delete(Request $request, Reminder $reminder, EntityManagerInterface $entityManager): Response
     {
-        // Vérification du token CSRF
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->request->get('_token'))) {
             try {
-                // Suppression de l'entité Reminder
                 $entityManager->remove($reminder);
                 $entityManager->flush();
+
                 $this->addFlash('success', 'Reminder deleted successfully.');
             } catch (\Exception $e) {
-                // Gestion des erreurs
-                $this->addFlash('error', 'An error occurred while deleting the reminder.');
+                $this->addFlash('error', 'An error occurred while deleting the reminder: ' . $e->getMessage());
             }
         } else {
-            // Gestion d'un token CSRF invalide
             $this->addFlash('error', 'Invalid CSRF token.');
         }
-    
+
         return $this->redirectToRoute('app_reminder_index', [], Response::HTTP_SEE_OTHER);
     }
 }
