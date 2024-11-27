@@ -29,6 +29,12 @@ class Reminder
     #[ORM\ManyToOne(inversedBy: 'idReminder')]
     private ?Category $idCategory;
 
+    public function __construct()
+    {
+        $this->createdDate = new \DateTime();
+        $this->isDone = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
