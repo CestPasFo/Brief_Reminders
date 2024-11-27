@@ -3,11 +3,14 @@
 {% block title %}Edit Category{% endblock %}
 
 {% block body %}
-    <h1>Edit Category</h1>
+    <h1 class="text-2xl font-bold mb-4">Edit Category</h1>
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+        {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
-
-    {{ include('category/_delete_form.html.twig') }}
+    <div class="flex space-x-4">
+        <a href="{{ path('app_category_index') }}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Back to List</a>
+        {{ include('category/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
