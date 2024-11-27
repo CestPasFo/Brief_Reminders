@@ -1,35 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Category Index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <h1 class="text-2xl font-bold mb-4">Category Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <h2 class="text-lg font-semibold">{{ category.name }}</h2>
+                <p class="text-gray-600">ID: {{ category.id }}</p>
+                <div class="mt-4">
+                    <a href="{{ path('app_category_show', {'id': category.id}) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Show</a>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
+                    <form action="{{ path('app_category_delete', {'id': category.id}) }}" method="post" style="display:inline;">
+                        <input type="submit" value="Delete" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 cursor-pointer">
+                    </form>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+            <div class="col-span-full bg-gray-200 text-center p-4 rounded-lg">
+                No records found
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('app_category_new') }}">Create new</a>
+    <div class="mt-6">
+        <a href="{{ path('app_category_new') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Create New</a>
+    </div>
 {% endblock %}
