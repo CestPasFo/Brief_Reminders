@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Header -->
+  <header class="p-4 bg-white shadow-md">
+    <div class="flex items-center justify-between max-w-4xl mx-auto">
+      <div class="flex items-center space-x-2">
+        <img src="logo.svg" alt="Logo" class="h-6">
+        <span class="text-2xl font-bold text-gray-800">Reminder</span>
+      </div>
+      <nav class="flex space-x-4 mb-8">
+        <button class="px-4 py-2 bg-red-200 text-red-800 rounded-md hover:bg-red-300">Mes Catégories</button>
+        <button class="px-4 py-2 bg-red-200 text-red-800 rounded-md hover:bg-red-300">Mes Rappels</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto mt-8">
+
+    <!-- Buttons Grid -->
+    <div class="grid grid-cols-3 gap-4">
+      <!-- Catégories -->
+      <button id="showFormBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Ajouter une catégorie
+      </button>
+      
+      <div id="categoryForm" class="hidden mt-4">
+        <form id="addCategoryForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
+              Nom de la catégorie
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="categoryName" type="text" placeholder="Entrez le nom de la catégorie" required>
+          </div>
+          <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const showFormBtn = document.getElementById('showFormBtn');
+          const categoryForm = document.getElementById('categoryForm');
+          const addCategoryForm = document.getElementById('addCategoryForm');
+          const categoryNameInput = document.getElementById('categoryName');
+      
+          showFormBtn.addEventListener('click', function() {
+            categoryForm.classList.toggle('hidden');
+          });
+      
+          addCategoryForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const categoryName = categoryNameInput.value.trim();
+            
+            if (categoryName) {
+              fetch('/api/categories', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: categoryName })
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Erreur réseau');
+                }
+                return response.json();
+              })
+              .then(data => {
+                alert('Catégorie ajoutée avec succès !');
+                categoryForm.classList.add('hidden');
+                categoryNameInput.value = '';
+              })
+              .catch((error) => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'ajout de la catégorie.');
+              });
+            } else {
+              alert('Veuillez entrer un nom de catégorie valide.');
+            }
+          });
+        });
+      </script>
+
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Modifier une catégorie</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Supprimer une catégorie</button>
+
+      <!-- Reminders -->
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Ajouter un reminder</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Modifier un reminder</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Supprimer un reminder</button>
+
+      <!-- Validation -->
+      <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 col-span-3">Valider un reminder</button>
+    </div>
+
+  </main>
+
+</body>
+</html>
