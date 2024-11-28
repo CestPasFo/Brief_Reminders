@@ -1,12 +1,12 @@
 {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
-    <div>
-        {{ form_label(form.name, null, {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
-        {{ form_widget(form.name, {'attr': {'class': 'mt-2 block w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-    </div>
+<div>
+    {{ form_label(form.name, null, {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'mt-2 block w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+</div>
 
-    <div class="mt-4">
-        <button type="submit" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">{{ button_label|default('Save') }}</button>
-    </div>
+<div class="mt-4">
+    <button type="submit" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">{{ button_label|default('Enregistrer') }}</button>
+</div>
 
 {{ form_end(form) }}

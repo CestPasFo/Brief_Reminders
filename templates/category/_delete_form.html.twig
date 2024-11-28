@@ -1,5 +1,6 @@
 <form action="{{ path('app_category_delete', {'id': category.id}) }}" method="post" style="display:inline;">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+    <input type="hidden" name="_method" value="DELETE"> <!-- Champ caché pour la méthode DELETE -->
     <button 
         type="submit" 
         class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 cursor-pointer"
