@@ -70,7 +70,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-#[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
+#[Route('/{id}/delete', name: 'app_category_delete', methods: ['POST'])]
 public function delete(Request $request, Category $category, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
 {
     // Vérifier la validité du token CSRF
