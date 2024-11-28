@@ -3,8 +3,9 @@
 {% block title %}Category{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold mb-4">Category</h1>
-
+<div class="flex justify-center pt-4"> 
+    <h1 class="text-2xl font-bold mb-4">Catégories</h1>
+</div>
     <div class="bg-white shadow-md rounded-lg p-6">
         <table class="min-w-full">
             <tbody>
@@ -20,7 +21,7 @@
         </table>
     </div>
 
-    <div class="mt-6 space-x-4">
+    <div class="space-x-4 flex justify-center mt-6 gap-4">
         <a href="{{ path('app_category_index') }}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Back to List</a>
         <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit</a>
         <form action="{{ path('app_category_delete', {'id': category.id}) }}" method="post" style="display:inline;">
