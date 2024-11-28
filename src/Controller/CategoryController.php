@@ -11,8 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 
 #[Route('/category')]
 final class CategoryController extends AbstractController{
@@ -70,40 +68,40 @@ final class CategoryController extends AbstractController{
         ]);
     }
 
-    #[Route('/category/{id}', name: 'app_category_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
     {
-        $logger->info('Méthode delete appelée pour la catégorie : ' . $category->getId());
-
-        // Vérification du token CSRF
-        $isValid = $this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'));
-        $logger->info('Token CSRF valide : ' . ($isValid ? 'Oui' : 'Non'));
-
-        if ($isValid) {
+        $logger->info('Delete method called for category ID: ' . $category->getId());
+    
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
+            $logger->info('CSRF token is valid');
             try {
-                $logger->info('Début de la transaction');
-                $entityManager->beginTransaction();
-
-                $logger->info('Suppression de la catégorie');
+                // Gérer les Reminders associés
+                foreach ($category->getIdReminder() as $reminder) {
+                    $reminder->setIdCategory(null);
+                    $entityManager->persist($reminder);
+                }
+    
+                $logger->info('Attempting to remove category');
                 $entityManager->remove($category);
+                $logger->info('Category marked for removal');
                 
-                $logger->info('Flush des changements');
+                $logger->info('Flushing changes to database');
                 $entityManager->flush();
-                
-                $logger->info('Commit de la transaction');
-                $entityManager->commit();
-
-                $this->addFlash('success', 'Catégorie supprimée avec succès.');
-                $logger->info('Catégorie supprimée avec succès');
+                $logger->info('Changes flushed successfully');
+    
+                $this->addFlash('success', 'Category deleted successfully.');
+                $logger->info('Success flash message added');
             } catch (\Exception $e) {
-                $entityManager->rollback();
-                $this->addFlash('error', 'Erreur lors de la suppression : ' . $e->getMessage());
-                $logger->error('Erreur lors de la suppression : ' . $e->getMessage());
+                $logger->error('Error during category deletion: ' . $e->getMessage());
+                $this->addFlash('error', 'Error deleting category: ' . $e->getMessage());
             }
         } else {
-            $this->addFlash('error', 'Token CSRF invalide');
-            $logger->warning('Tentative de suppression avec un token CSRF invalide');
+            $logger->warning('Invalid CSRF token');
+            $this->addFlash('error', 'Invalid token');
         }
+    
+        $logger->info('Redirecting to category index');
         return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
     }
 }
