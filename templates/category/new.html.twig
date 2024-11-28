@@ -3,11 +3,15 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold mb-4">Create New Category</h1>
 
-    <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+        <div class="flex justify-center pt-4">
+                <h1 class="text-2xl font-bold mb-4">Créer une nouvelle Catégorie</h1>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 flex justify-center gap-3">
         {{ include('category/_form.html.twig') }}
-    </div>
-
-    <a href="{{ path('app_category_index') }}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition duration-200">Back to List</a>
+        </div>
+    
+        <div class="flex justify-center pt-10">
+                <a href="{{ path('app_category_index') }}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition duration-200">Back to List</a>
+        </div>
 {% endblock %}

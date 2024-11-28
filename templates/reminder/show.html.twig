@@ -32,7 +32,7 @@
         </table>
     </div>
 
-    <div class="flex space-x-6">
+    <div class="flex justify-center pl-20 space-x-6">
         <a href="{{ path('app_reminder_index') }}" class="bg-gray-600 text-white px-5 py-3 rounded-lg hover:bg-gray-700 transition duration-200">Back to List</a>
         <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-600 text-white px-5 py-3 rounded-lg hover:bg-yellow-700 transition duration-200">Edit</a>
         {{ include('reminder/_delete_form.html.twig') }}

@@ -1,4 +1,49 @@
-{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
-    {{ form_widget(form, {'attr': {'class': 'w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-    <button type="submit" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<form method="post" action="{{ path('app_category_new') }}" class="space-y-6">
+
+<div class="flex gap-6">
+    <!-- Colonne gauche -->
+    <div class="w-1/2 space-y-6">
+        <div>
+            <label for="category_id_category_id" class="block text-sm font-medium text-gray-700 pb-3">ID de catégorie</label>
+            <input type="text" id="category_id_category_id" name="category[id_category_id]" 
+                   class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label for="category_created_date" class="block text-sm font-medium text-gray-700 pb-3">Created Date</label>
+            <input type="date" id="category_created_date" name="category[created_date]" 
+                   class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+    </div>
+
+    <!-- Colonne droite -->
+    <div class="w-1/2 space-y-6">
+        <div>
+            <label for="category_title" class="block text-sm font-medium text-gray-700 pb-3">Title</label>
+            <input type="text" id="category_title" name="category[title]" 
+                   class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label for="category_limit_date" class="block text-sm font-medium text-gray-700 pb-3">Limit Date</label>
+            <input type="date" id="category_limit_date" name="category[limit_date]" 
+                   class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+    </div>
+</div>
+
+
+    <div class="flex items-center">
+        <input type="checkbox" id="category_is_done" name="category[is_done]" 
+               class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="category_is_done" class="ml-2 text-sm font-medium text-gray-700">Is Done</label>
+    </div>
+
+    <input type="hidden" name="_token" value="{{ csrf_token('category_item') }}">
+
+    <div>
+        <button type="submit" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+</form>

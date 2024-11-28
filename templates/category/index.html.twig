@@ -3,9 +3,10 @@
 {% block title %}Category Index{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold mb-4">Category Index</h1>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex justify-center p-4">
+    <h1 class="text-2xl font-bold mb-4">Liste des Catégories</h1>
+</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-16 px-20">
         {% for category in categories %}
             <div class="bg-white shadow-md rounded-lg p-4">
                 <h2 class="text-lg font-semibold">{{ category.name }}</h2>
@@ -25,7 +26,7 @@
         {% endfor %}
     </div>
 
-    <div class="flex justify-between mt-6">
+    <div class="flex justify-center mt-6 gap-4">
         <a href="{{ path('app_category_new') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Create New</a>
 
         <!-- Nouveau bouton pour l'index des rappels -->
