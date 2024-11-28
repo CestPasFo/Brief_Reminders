@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/reminder')]
-final class ReminderController extends AbstractController{
+final class ReminderController extends AbstractController
+{
     #[Route(name: 'app_reminder_index', methods: ['GET'])]
     public function index(ReminderRepository $reminderRepository): Response
     {
@@ -29,8 +30,14 @@ final class ReminderController extends AbstractController{
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Assurez-vous d'associer une catégorie si nécessaire
+            // Exemple : $category = ...; // Récupérer la catégorie sélectionnée
+            // $reminder->setIdCategory($category);
+
             $entityManager->persist($reminder);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Rappel créé avec succès.');
 
             return $this->redirectToRoute('app_reminder_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -56,7 +63,12 @@ final class ReminderController extends AbstractController{
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Si vous avez besoin de gérer des associations ici, faites-le.
+            // Exemple : Associer une nouvelle catégorie si nécessaire
+
             $entityManager->flush();
+
+            $this->addFlash('success', 'Rappel mis à jour avec succès.');
 
             return $this->redirectToRoute('app_reminder_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -72,15 +84,19 @@ final class ReminderController extends AbstractController{
     {
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->request->get('_token'))) {
             try {
+                // Supprimer le rappel
                 $entityManager->remove($reminder);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Reminder deleted successfully.');
+                // Message flash de succès
+                $this->addFlash('success', 'Rappel supprimé avec succès.');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'An error occurred while deleting the reminder: ' . $e->getMessage());
+                // Gestion des erreurs lors de la suppression
+                $this->addFlash('error', 'Une erreur est survenue lors de la suppression du rappel : ' . $e->getMessage());
             }
         } else {
-            $this->addFlash('error', 'Invalid CSRF token.');
+            // Gérer le cas d'un token CSRF invalide
+            $this->addFlash('error', 'Token CSRF invalide.');
         }
 
         return $this->redirectToRoute('app_reminder_index', [], Response::HTTP_SEE_OTHER);

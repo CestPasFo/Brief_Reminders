@@ -26,7 +26,8 @@ class Reminder
     #[ORM\Column]
     private ?bool $isDone = null;
 
-    #[ORM\OneToMany(targetEntity: Reminder::class, mappedBy: 'idCategory', orphanRemoval: true)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'idReminder')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Category $idCategory = null;
 
     public function __construct()
