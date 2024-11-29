@@ -17,9 +17,11 @@
     </div>
 </nav>
 
-<h1 class="text-2xl font-bold mb-4">Index des Catégories</h1>
+    <div class="flex justify-center pt-10">
+        <h1 class="text-2xl font-bold mb-4">Liste des Catégories</h1>
+    </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-16 px-20">
     {% for category in categories %}
         <div class="bg-white shadow-md rounded-lg p-4">
             <h2 class="text-lg font-semibold">{{ category.name }}</h2>
@@ -37,7 +39,7 @@
     {% endfor %}
 </div>
 
-<div class="flex justify-between mt-6">
+<div class="flex justify-center">
     <a href="{{ path('app_category_new') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Créer une nouvelle catégorie</a>
 </div>
 {% endblock %}
