@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reminder Index{% endblock %}
+{% block title %}Liste des Reminders{% endblock %}
 
 {% block body %}
 <nav class="navbar navbar-expand-lg bg-green-900 navbar-light bg-light flex justify-between items-center p-3">
@@ -42,8 +42,8 @@
                 <td class="py3 px4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td class="py3 px4">{{ reminder.isDone ? 'Yes' : 'No' }}</td>
                 <td class="py3 px4">
-                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="text-blue600 hover:underline">Voir</a>
-                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class "text-yellow600 hover:underline ml2">Modifier</a>
+                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="bg-blue-500 hover:bg-blue-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Voir</a>
+                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Modifier</a>
                     {{ include('reminder/_delete_form.html.twig', {'reminder': reminder}) }}
                 </td>
             </tr>
@@ -56,10 +56,13 @@
     </table>
 </div>
 
-<div class "flex justify-center gap4">
-    <a href="{{ path('app_reminder_new') }}" class "bg-green600 text-white px5 py3 rounded-lg hover:bg-green700 transition duration200">Créer un nouveau Reminder</a>
-
-    <a href="{{ path('app_category_index') }}" class "bg-blue600 text-white px5 py3 rounded-lg hover:bg-blue700 transition duration200">Aller à la liste des catégorie</a>
+<div class="flex justify-center gap-4">
+    <a href="{{ path('app_reminder_new') }}" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition duration-200">
+        Créer un nouveau Reminder
+    </a>
+    <a href="{{ path('app_category_index') }}" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+        Aller à la liste des catégories
+    </a>
 </div>
 
 {% endblock %}
