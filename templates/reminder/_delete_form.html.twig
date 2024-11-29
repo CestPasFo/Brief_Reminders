@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_reminder_delete', {'id': reminder.id}) }}" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet élément ?');" class="inline-block mt-4">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reminder.id) }}">
-    <button type="submit" class="bg-red-600 text-white font-semibold px-5 py-3 rounded-lg shadow-md hover:bg-red-700 transition duration-200">Delete</button>
+    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 h-10 rounded transition duration-300 ease-in-out">Supprimer</button>
 </form>
