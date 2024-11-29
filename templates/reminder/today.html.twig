@@ -3,17 +3,17 @@
 {% block title %}Rappels du jour{% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg bg-blue-500 navbar-light bg-light flex justify-between items-center p-3">
+<nav class="navbar navbar-expand-lg bg-green-900 navbar-light bg-light flex justify-between items-center p-3">
     <a class="navbar-brand" href="{{ path('app_home') }}">
-        <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 30px !important;" class="ml-4">
+        <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 68px !important;" class="ml-4">
     </a>
     <div class="flex space-x-4">
-        <a href="{{ path('app_reminder_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-            Reminders
-        </a>
-        <a href="{{ path('app_category_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-            Categories
-        </a>
+    <a href="{{ path('app_reminder_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
+        Reminders
+    </a>
+    <a href="{{ path('app_category_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
+        Categories
+    </a>
     </div>
 </nav>
 
@@ -42,14 +42,15 @@
                 <td class="py-3 px-4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td class="py-3 px-4">{{ reminder.isDone ? 'Oui' : 'Non' }}</td>
                 <td class="py-3 px-4">
-                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Voir</a>
-                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Modifier</a>
+                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="bg-blue-500 hover:bg-blue-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Voir</a>
+                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Modifier</a>
                     {{ include('reminder/_delete_form.html.twig', {'reminder': reminder}) }}
                 </td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="6" class="text-center py-4">Aucun rappel pour aujourd'hui</td>
+                <a href="{{ path('app_reminder_new') }}" class "bg-green600 text-white px5 py3 rounded-lg hover:bg-green700 transition duration200">Créer un nouveau Reminder</a>
             </tr>
         {% endfor %}
         </tbody>
