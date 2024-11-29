@@ -1,13 +1,37 @@
-<nav class="navbar navbar-expand-lg bg-green-900 navbar-light bg-light flex justify-between items-center p-3">
+<nav class="bg-green-900 w-full flex items-center justify-between p-3">
     <a class="navbar-brand" href="{{ path('app_home') }}">
         <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 68px !important;" class="ml-4">
     </a>
-    <div class="flex space-x-4">
+    <div class="flex items-center md:hidden">
+        <!-- Hamburger Icon -->
+        <button id="menu-toggle" class="text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </div>
+    <div id="menu" class="hidden md:flex space-x-4">
         <a href="{{ path('app_reminder_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
-            Reminders
+            Rappels
         </a>
         <a href="{{ path('app_category_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
-            Categories
+            Catégories
         </a>
     </div>
 </nav>
+
+<!-- Responsive Menu -->
+<div id="mobile-menu" class="hidden md:hidden bg-green-800 w-full">
+    <a href="{{ path('app_reminder_index') }}" class="block text-zinc-400 hover:bg-green-500 py-2 px-4 transition duration-300 ease-in-out">Rappels</a>
+    <a href="{{ path('app_category_index') }}" class="block text-zinc-400 hover:bg-green-500 py-2 px-4 transition duration-300 ease-in-out">Catégories</a>
+</div>
+
+<!-- JavaScript for toggling the menu -->
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
