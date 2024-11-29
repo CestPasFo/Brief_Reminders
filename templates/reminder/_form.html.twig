@@ -1,16 +1,6 @@
 <form method="post" action="{{ path('app_reminder_new') }}" class="space-y-6">
 
     <div class="flex gap-6">
-        <!-- Colonne gauche -->
-        <div class="w-1/2 space-y-6">
-            <div>
-                <label for="reminder_created_date" class="block text-sm font-medium text-gray-700 pb-3">Date de création</label>
-                <input type="datetime-local" id="reminder_created_date" name="reminder[createdDate]" 
-                       class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                       value="{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d\TH:i') : '' }}">
-            </div>
-        </div>
-
         <!-- Colonne droite -->
         <div class="w-1/2 space-y-6">
             <div>
