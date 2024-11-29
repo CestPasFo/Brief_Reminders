@@ -48,11 +48,12 @@
         {% else %}
             <tr>
                 <td colspan="6" class="text-center py-4">Aucun rappel pour aujourd'hui</td>
-                <a href="{{ path('app_reminder_new') }}" class "bg-green600 text-white px5 py3 rounded-lg hover:bg-green700 transition duration200">Créer un nouveau Reminder</a>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-
+<div class="flex justify-center">
+    <a href="{{ path('app_reminder_new') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Créer une nouvelle catégorie</a>
+</div>
 {% endblock %}
