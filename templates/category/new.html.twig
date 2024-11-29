@@ -3,24 +3,49 @@
 {% block title %}Nouvelle Catégorie{% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-lg bg-blue-500 navbar-light bg-light flex justify-between items-center p-3">
+    <a class="navbar-brand" href="{{ path('app_home') }}">
+        <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 68px !important;" class="ml-4">
+    </a>
+    <div class="flex space-x-4">
+        <a href="{{ path('app_reminder_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+            Reminders
+        </a>
+        <a href="{{ path('app_category_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+            Categories
+        </a>
+    </div>
+</nav>
+
 <div class="flex justify-center pt-5">
     <h1 class="text-2xl font-bold mb-6">Créer une nouvelle catégorie</h1>
 </div>
 
 <div class="bg-white shadow-lg rounded-lg p-8 mb-6 flex justify-center">
     {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
-        <div>
-            {{ form_widget(form) }}
+    <div class="flex flex-row gap-4">
+        <label class="p-2">Nom:</label>
+        <div class="space-y-4">
+    {% for field in form %}
+            <div class="flex justify-center">
+                {{ form_widget(field, {'attr': {'class': 'bg-gray-100 border-2 border-gray-300 rounded p-2'}}) }}
+            </div>
         </div>
+    {% endfor %} 
+    
+
+</div>
+<div class="flex justify-center gap-4">
+
         <div class="mt-4">
             <button type="submit" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
                 Enregistrer
             </button>
         </div>
-    {{ form_end(form) }}
-</div>
+   
 
-<div class="flex justify-center">
-    <a href="{{ path('app_category_index') }}" class="bg-gray-600 text-white px-5 py-3 rounded-lg hover:bg-gray-700 transition duration-200">Retour à la liste</a>
+{{ form_end(form) }}
+
+    <a href="{{ path('app_category_index') }}" class="bg-gray-600 text-white flex justify-center items-center h-12 mt-4 px-4 rounded-lg hover:bg-gray-700 transition duration-200">Retour à la liste</a>
 </div>
 {% endblock %}
