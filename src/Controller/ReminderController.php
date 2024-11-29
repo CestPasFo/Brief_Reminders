@@ -30,10 +30,6 @@ final class ReminderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Assurez-vous d'associer une catégorie si nécessaire
-            // Exemple : $category = ...; // Récupérer la catégorie sélectionnée
-            // $reminder->setIdCategory($category);
-
             $entityManager->persist($reminder);
             $entityManager->flush();
 
@@ -63,13 +59,8 @@ final class ReminderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Si vous avez besoin de gérer des associations ici, faites-le.
-            // Exemple : Associer une nouvelle catégorie si nécessaire
-
             $entityManager->flush();
-
             $this->addFlash('success', 'Rappel mis à jour avec succès.');
-
             return $this->redirectToRoute('app_reminder_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -84,18 +75,14 @@ final class ReminderController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->request->get('_token'))) {
             try {
-                // Supprimer le rappel
                 $entityManager->remove($reminder);
                 $entityManager->flush();
 
-                // Message flash de succès
                 $this->addFlash('success', 'Rappel supprimé avec succès.');
             } catch (\Exception $e) {
-                // Gestion des erreurs lors de la suppression
                 $this->addFlash('error', 'Une erreur est survenue lors de la suppression du rappel : ' . $e->getMessage());
             }
         } else {
-            // Gérer le cas d'un token CSRF invalide
             $this->addFlash('error', 'Token CSRF invalide.');
         }
 

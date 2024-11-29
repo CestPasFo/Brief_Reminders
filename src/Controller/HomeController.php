@@ -13,10 +13,10 @@ class HomeController extends AbstractController
     public function index(ReminderRepository $reminderRepository): Response
     {
         $today = new \DateTime();
-        $today->setTime(0, 0, 0); // Réinitialise l'heure à minuit
+        $today->setTime(0, 0, 0);
 
         $tomorrow = new \DateTime();
-        $tomorrow->setTime(23, 59, 59); // Fin de la journée
+        $tomorrow->setTime(23, 59, 59);
 
         $reminders = $reminderRepository->createQueryBuilder('r')
             ->where('r.limitDate BETWEEN :today AND :tomorrow')

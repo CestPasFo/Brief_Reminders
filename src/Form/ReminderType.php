@@ -15,9 +15,6 @@ class ReminderType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('createdDate', null, [
-                'widget' => 'single_text'
-            ])
             ->add('limitDate', null, [
                 'widget' => 'single_text'
             ])
