@@ -25,7 +25,6 @@
     <table class="min-w-full">
         <thead>
             <tr class="bg-gray-300">
-                <th class="py-3 px-4 text-left text-gray-700">Id</th>
                 <th class="py-3 px-4 text-left text-gray-700">Titre</th>
                 <th class="py-3 px-4 text-left text-gray-700">Date de création</th>
                 <th class="py-3 px-4 text-left text-gray-700">Date limite</th>
@@ -36,7 +35,6 @@
         <tbody>
         {% for reminder in reminders %}
             <tr class="border-b hover:bg-gray-100">
-                <td class="py-3 px-4">{{ reminder.id }}</td>
                 <td class="py-3 px-4">{{ reminder.title }}</td>
                 <td class="py-3 px-4">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td class="py-3 px-4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
