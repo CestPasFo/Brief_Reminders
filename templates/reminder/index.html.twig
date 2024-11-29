@@ -6,46 +6,71 @@
 
 {% include 'navbar/navbar.html.twig' %}
 
-<div class="flex justify-center pt-5">
-    <h1 class="text-2xl font-bold mb-6">Reminder Index</h1>
+<!-- Responsive Menu -->
+<div id="mobile-menu" class="hidden bg-green-800 w-screen fixed top-14 left-0 z-50">
+    <a href="{{ path('app_reminder_index') }}" class="block text-zinc-400 hover:bg-green-500 py-2 px-4 transition duration-300 ease-in-out">Reminders</a>
+    <a href="{{ path('app_category_index') }}" class="block text-zinc-400 hover:bg-green-500 py-2 px-4 transition duration-300 ease-in-out">Categories</a>
 </div>
 
-<div class="bg-white shadow-lg rounded-lg p-8 mb-6">
+<!-- JavaScript for toggling the menu -->
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+<div class="flex justify-center pt-5">
+    <h1 class="text-2xl font-bold mb-6">Liste des Reminders</h1>
+</div>
+
+<div class="bg-white shadow-lg rounded-lg p-8 mb-6 overflow-x-auto">
     <table class="min-w-full">
         <thead>
             <tr class="bg-gray-300">
-                <th class="py-3 px-4 text-left text-gray-700">Id</th>
-                <th class="py-3 px-4 text-left text-gray-700">Title</th>
-                <th class="py-3 px-4 text-left text-gray-700">Created Date</th>
-                <th class="py-3 px-4 text-left text-gray-700">Limit Date</th>
-                <th class="py-3 px-4 text-left text-gray-700">Is Done</th>
-                <th class="py-3 px-4 text-left text-gray700">Actions</th>
+                <th class="py-3 px-4 text-left text-gray-700">Titre</th>
+                <th class="py-3 px-4 text-left text-gray-700 hidden md:table-cell">Date de création</th>
+                <th class="py-3 px-4 text-left text-gray-700">Date limite</th>
+                <th class="py-3 px-4 text-left text-gray-700 hidden md:table-cell">Terminé</th>
+                <th class="py-3 px-4 text-left text-gray-700 hidden md:table-cell">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for reminder in reminders %}
-            <tr class="border-b hover:bg-gray100">
-                <td class="py3 px4">{{ reminder.id }}</td>
-                <td class="py3 px4">{{ reminder.title }}</td>
-                <td class="py3 px4">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td class="py3 px4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td class="py3 px4">{{ reminder.isDone ? 'Yes' : 'No' }}</td>
-                <td class="py3 px4">
-                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="bg-blue-500 hover:bg-blue-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Voir</a>
-                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 h-10 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Modifier</a>
+            <tr class="border-b hover:bg-gray-100">
+                <td class="py-3 px-4">
+                    <!-- Lien cliquable uniquement sur mobile -->
+                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="text-blue-500 hover:underline md:hidden">
+                        {{ reminder.title }}
+                    </a>
+                    <!-- Titre normal visible sur les écrans plus grands -->
+                    <span class="hidden md:inline">{{ reminder.title }}</span>
+                </td>
+                <td class="py-3 px-4 hidden md:table-cell">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="py-3 px-4">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="py-3 px-4 hidden md:table-cell">{{ reminder.isDone ? 'Oui' : 'Non' }}</td>
+                <td class="py-3 px-4 flex justify-center space-x-2 hidden md:table-cell">
+                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        Voir
+                    </a>
+                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        Modifier
+                    </a>
                     {{ include('reminder/_delete_form.html.twig', {'reminder': reminder}) }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan "6" class "text-center py4">No records found</td>
+                <td colspan="5" class="text-center py-4">Aucun rappel pour aujourd'hui</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
 
-<div class="flex justify-center gap-4">
+<div class="flex flex-col md:flex-row justify-center items-center gap-4">
     <a href="{{ path('app_reminder_new') }}" class="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition duration-200">
         Créer un nouveau Reminder
     </a>

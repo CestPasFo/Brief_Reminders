@@ -67,7 +67,6 @@ class Category
     public function removeIdReminder(Reminder $idReminder): static
     {
         if ($this->idReminder->removeElement($idReminder)) {
-            // set the owning side to null (unless already changed)
             if ($idReminder->getIdCategory() === $this) {
                 $idReminder->setIdCategory(null);
             }

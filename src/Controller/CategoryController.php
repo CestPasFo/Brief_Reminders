@@ -58,7 +58,6 @@ final class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Pas besoin d'appeler persist() car l'entité est déjà gérée
             $entityManager->flush();
 
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
@@ -79,21 +78,16 @@ public function delete(Request $request, Category $category, EntityManagerInterf
             $entityManager->remove($category);
             $entityManager->flush();
 
-            // Ajouter un message flash de succès
             $this->addFlash('success', 'La catégorie a été supprimée avec succès.');
             $logger->info('Category deleted successfully: ID ' . $category->getId());
         } catch (\Exception $e) {
-            // Gérer les erreurs lors de la suppression
             $this->addFlash('error', 'Une erreur est survenue lors de la suppression de la catégorie : ' . htmlspecialchars($e->getMessage()));
             $logger->error('Error during category deletion: ' . htmlspecialchars($e->getMessage()));
         }
     } else {
-        // Gérer le cas d'un token CSRF invalide
         $this->addFlash('error', 'Token CSRF invalide.');
         $logger->warning('Invalid CSRF token for category ID: ' . htmlspecialchars($category->getId()));
     }
-
-    // Rediriger vers l'index des catégories
     return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
 }
 }
