@@ -3,7 +3,7 @@
     <div class="flex gap-6">
         <!-- Colonne gauche -->
         <div class="w-1/2 space-y-6">
-            <div>
+            <div class="px-20">
                 <label for="reminder_created_date" class="block text-sm font-medium text-gray-700 pb-3">Date de création</label>
                 <input type="datetime-local" id="reminder_created_date" name="reminder[createdDate]" 
                        class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
@@ -13,13 +13,13 @@
 
         <!-- Colonne droite -->
         <div class="w-1/2 space-y-6">
-            <div>
+            <div class="pr-20">
                 <label for="reminder_title" class="block text-sm font-medium text-gray-700 pb-3">Titre</label>
                 <input type="text" id="reminder_title" name="reminder[title]" 
                        class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
-            <div>
+            <div class="pr-20">
                 <label for="reminder_limit_date" class="block text-sm font-medium text-gray-700 pb-3">Date limite</label>
                 <input type="datetime-local" id="reminder_limit_date" name="reminder[limitDate]" 
                        class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-
+<div class="flex justify-center gap-4">
     <div class="flex items-center">
         <input type="checkbox" id="reminder_is_done" name="reminder[isDone]" 
                class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
@@ -41,4 +41,5 @@
             {{ button_label|default('Enregistrer') }}
         </button>
     </div>
+</div>
 </form>

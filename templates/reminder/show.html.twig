@@ -3,38 +3,45 @@
 {% block title %}Reminder{% endblock %}
 
 {% block body %}
-<h1 class "text-xl font-bold mb6">Reminder Details</h1>
 
-<div class "bg-white shadow-lg rounded-lg p8 mb6">
-    <table class "min-w-full">
+{% include 'navbar/navbar.html.twig' %}
+
+<div class="flex justify-center pt-4">
+    <h1 class= "text-xl font-bold mb6">Détails du Rappel</h1>
+</div>
+
+<div class= "bg-white shadow-lg rounded-lg p8 mb6 flex justify-center">
+    <table class= "min-w-full flex justify-center py-4">
         <tbody>
-            <tr class "border-b">
-                <th class "py3 text-left text-gray600">Id</th>
-                <td class "py3">{{ reminder.id }}</td>
+            <tr class= "border-b">
+                <th class= "py-3 text-left text-gray600">Id</th>
+                <td class= "py-3">{{ reminder.id }}</td>
             </tr>
-            <tr class "border-b">
-                <th class "py3 text-left text-gray600">Title</th>
-                <td class "py3">{{ reminder.title }}</td>
+            <tr class= "border-b">
+                <th class= "py-3 text-left text-gray600">Title</th>
+                <td class= "py-3">{{ reminder.title }}</td>
             </tr>
-            <tr class "border-b">
-                <th class "py3 text-left text-gray600">Created Date</th>
-                <td class "py3">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
+            <tr class= "border-b">
+                <th class= "py-3 text-left text-gray600">Created Date</th>
+                <td class= "py-3">{{ reminder.createdDate ? reminder.createdDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr> 
-            <trclass "border-b">
-                <thclass "py3 text-left text-gray600">Limit Date</th> 
-                <tdclass "py3">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td> 
+            <tr class= "border-b">
+                <th class= "py-3 text-left text-gray600">Limit Date</th> 
+                <td class= "py-3">{{ reminder.limitDate ? reminder.limitDate|date('Y-m-d H:i:s') : '' }}</td> 
             </tr> 
-            <trclass "border-b"> 
-                <<thclass "py3 text-left text-gray600">Is Done</th> 
-                <<tdclass "py3">{{ reminder.isDone ? 'Yes' : 'No' }}</td> 
+            <tr class= "border-b"> 
+                <th class= "py-3 text-left text-gray600">Is Done</th> 
+                <td class= "py-3">{{ reminder.isDone ? 'Yes' : 'No' }}</td> 
             </tr> 
         </tbody> 
     </table> 
 </div>
 
-<divclass "flex justify-center pl20 space-x6"> 
-    <<a href="{{ path('app_reminder_index') }}"class "bg-gray600 text-white px5 py3 rounded-lg hover:bg-gray700 transition duration200">Back to List</a> 
-    <<a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}"class "bg-yellow600 text-white px5 py3 rounded-lg hover:bg-yellow700 transition duration200">Edit</a> 
+<div class= "flex justify-center space-x6 gap-4 pt-4"> 
+
+<a href="{{ path('app_reminder_index') }}" class="bg-gray-600 hover:bg-red-600 text-white font-bold py-2 px-4 h-10 rounded transition duration-300 ease-in-out">Retour à la liste</a> 
+    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}" class="bg-yellow-600 hover:bg-red-600 text-white font-bold py-2 px-4 h-10 rounded transition duration-300 ease-in-out">Modifier</a>
+
     {{ include('reminder/_delete_form.html.twig', {'reminder': reminder}) }} 
 </div> 
 {% endblock %}
