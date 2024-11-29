@@ -3,17 +3,17 @@
 {% block title %}Nouvelle Catégorie{% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg bg-blue-500 navbar-light bg-light flex justify-between items-center p-3">
+<nav class="navbar navbar-expand-lg bg-green-900 navbar-light bg-light flex justify-between items-center p-3">
     <a class="navbar-brand" href="{{ path('app_home') }}">
         <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 68px !important;" class="ml-4">
     </a>
     <div class="flex space-x-4">
-        <a href="{{ path('app_reminder_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-            Reminders
-        </a>
-        <a href="{{ path('app_category_index') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-            Categories
-        </a>
+    <a href="{{ path('app_reminder_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
+        Reminders
+    </a>
+    <a href="{{ path('app_category_index') }}" class="bg-green-400 hover:bg-green-500 font-bold text-zinc-400 py-2 px-4 tracking-wide rounded transition duration-300 ease-in-out">
+        Categories
+    </a>
     </div>
 </nav>
 
